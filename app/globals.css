@@ -1,26 +1,139 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+/* ─── CSS Custom Properties ──────────────────────────────────────────────── */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand colors */
+  --color-background:        #FFFFFF;
+  --color-background-soft:   #F7F7F5;
+  --color-text-primary:      #1A1A1A;
+  --color-text-secondary:    #5A5A5A;
+  --color-border:            #EAEAEA;
+  --color-accent-primary:    #B85C38;
+  --color-accent-secondary:  #2F5D50;
+  --color-success:           #4A7C59;
+  --color-warning:           #C96A2B;
+
+  /* Typography */
+  --font-heading: var(--font-heading, 'Playfair Display', Georgia, serif);
+  --font-body:    var(--font-body, 'Inter', system-ui, sans-serif);
 }
+
+/* ─── Tailwind v4 Theme Extension ────────────────────────────────────────── */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background:       var(--color-background);
+  --color-background-soft:  var(--color-background-soft);
+  --color-text-primary:     var(--color-text-primary);
+  --color-text-secondary:   var(--color-text-secondary);
+  --color-border:           var(--color-border);
+  --color-accent:           var(--color-accent-primary);
+  --color-accent-secondary: var(--color-accent-secondary);
+  --color-success:          var(--color-success);
+  --color-warning:          var(--color-warning);
+
+  --font-sans:    var(--font-body);
+  --font-serif:   var(--font-heading);
+  --font-heading: var(--font-heading);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Base Reset ─────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Typography Defaults ────────────────────────────────────────────────── */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-text-primary);
+  letter-spacing: -0.025em;
+}
+
+p {
+  color: var(--color-text-secondary);
+  line-height: 1.625;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ─── Selection ──────────────────────────────────────────────────────────── */
+
+::selection {
+  background-color: rgba(184, 92, 56, 0.15);
+  color: var(--color-text-primary);
+}
+
+/* ─── Focus Ring ─────────────────────────────────────────────────────────── */
+
+:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 2px;
+}
+
+/* ─── Scrollbar (Webkit) ─────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background-soft);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+}
+
+/* ─── Image Defaults ─────────────────────────────────────────────────────── */
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ─── Utility: Visually Hidden (Screen Reader Only) ──────────────────────── */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
