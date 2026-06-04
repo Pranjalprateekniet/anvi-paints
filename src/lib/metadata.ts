@@ -2,14 +2,13 @@ import type { Metadata } from 'next';
 
 // ─── Brand Constants ──────────────────────────────────────────────────────────
 
-export const SITE_NAME = 'Anvi Paints & Hardware';
+export const SITE_NAME = 'Anvi Paints';
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://anvipaints.com';
 export const SITE_LOCALE = 'en_IN';
 
-/** Default description used when no page-specific description is provided */
 export const DEFAULT_DESCRIPTION =
-  'Anvi Paints & Hardware — your trusted source for premium paints, coatings, and hardware supplies. Quality you can see, trust you can count on.';
+  'Anvi Paints — authorized dealer for Nerolac and Birla Opus in Ranchi. 10+ years of trusted service, premium paint solutions, and expert colour consultation.';
 
 /** Default OG image (relative to /public) */
 export const DEFAULT_OG_IMAGE = '/og-default.jpg';
@@ -39,7 +38,7 @@ export interface PageMetadataOptions {
  * // app/products/page.tsx
  * export const metadata = createPageMetadata({
  *   title: 'Products',
- *   description: 'Browse our full range of paints and hardware.',
+ *   description: 'Browse our full range of paints and coating solutions.',
  *   canonicalPath: '/products',
  * });
  * ```
@@ -62,11 +61,12 @@ export function createPageMetadata({
 
   const baseKeywords = [
     'paints',
-    'hardware',
-    'paint supplier',
-    'hardware store',
+    'paint dealer',
+    'Nerolac dealer',
+    'Birla Opus dealer',
     'premium paints',
     'Anvi Paints',
+    'Ranchi',
   ];
 
   return {
@@ -128,13 +128,14 @@ export const rootMetadata: Metadata = {
 
   keywords: [
     'paints',
-    'hardware',
-    'paint supplier',
-    'hardware store',
-    'premium paints',
-    'coatings',
+    'paint dealer Ranchi',
+    'Nerolac dealer',
+    'Birla Opus dealer',
+    'premium paints Ranchi',
+    'interior paints',
+    'exterior paints',
     'Anvi Paints',
-    'Anvi Hardware',
+    'Jharkhand paint dealer',
   ],
 
   openGraph: {

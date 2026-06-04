@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/src/lib/utils';
 import { Container } from '@/src/components/ui/Container';
@@ -11,17 +11,25 @@ import { Container } from '@/src/components/ui/Container';
 
 interface NavItem {
   label: string;
-  href: string;
+  sectionId: string;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: 'Products', href: '/products' },
-  { label: 'Brands', href: '/brands' },
-  { label: 'Services', href: '/services' },
-  { label: 'Projects', href: '/projects' },
-  { label: 'About', href: '/about' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Home',     sectionId: 'home' },
+  { label: 'Products', sectionId: 'products' },
+  { label: 'About',    sectionId: 'about' },
+  { label: 'Contact',  sectionId: 'contact' },
 ];
+
+// ─── Smooth scroll helper ─────────────────────────────────────────────────────
+
+function scrollToSection(id: string) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const navbarHeight = 64; // matches h-16
+  const top = el.getBoundingClientRect().top + window.scrollY - navbarHeight;
+  window.scrollTo({ top, behavior: 'smooth' });
+}
 
 // ─── Motion Variants ──────────────────────────────────────────────────────────
 
@@ -72,12 +80,23 @@ function HamburgerIcon({ open }: { open: boolean }) {
 
 // ─── Logo ─────────────────────────────────────────────────────────────────────
 
-function Logo() {
+function Logo({ isHome }: { isHome: boolean }) {
+  const router = useRouter();
+  
+  const handleClick = useCallback(() => {
+    if (isHome) {
+      scrollToSection('home');
+    } else {
+      router.push('/');
+    }
+  }, [isHome, router]);
+
   return (
-    <Link
-      href="/"
+    <button
+      type="button"
+      onClick={handleClick}
       className="group flex flex-col leading-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B85C38] focus-visible:ring-offset-2 rounded-sm"
-      aria-label="Anvi Paints & Hardware — Home"
+      aria-label="Anvi Paints — scroll to top"
     >
       <span
         className="text-xl font-bold tracking-tight text-[#1A1A1A] transition-colors duration-200 group-hover:text-[#B85C38]"
@@ -86,18 +105,27 @@ function Logo() {
         Anvi
       </span>
       <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#5A5A5A]">
-        Paints &amp; Hardware
+        Paints
       </span>
-    </Link>
+    </button>
   );
 }
 
-// ─── Desktop Nav Link ─────────────────────────────────────────────────────────
+// ─── Desktop Nav Button ───────────────────────────────────────────────────────
 
-function NavLink({ item, isActive }: { item: NavItem; isActive: boolean }) {
+function NavButton({
+  item,
+  isActive,
+  onClick,
+}: {
+  item: NavItem;
+  isActive: boolean;
+  onClick: () => void;
+}) {
   return (
-    <Link
-      href={item.href}
+    <button
+      type="button"
+      onClick={onClick}
       className={cn(
         'relative text-sm font-medium tracking-wide transition-colors duration-200',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B85C38] focus-visible:ring-offset-2 rounded-sm',
@@ -115,7 +143,7 @@ function NavLink({ item, isActive }: { item: NavItem; isActive: boolean }) {
           transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
         />
       )}
-    </Link>
+    </button>
   );
 }
 
@@ -124,17 +152,21 @@ function NavLink({ item, isActive }: { item: NavItem; isActive: boolean }) {
 /**
  * Navbar
  *
- * Sticky site header with:
- * - Logo and wordmark
- * - Desktop horizontal navigation
- * - Mobile hamburger menu with animated slide-down panel
+ * Single-page sticky header with:
+ * - Logo (scrolls to #home on click)
+ * - Smooth-scroll section navigation (no route changes)
+ * - IntersectionObserver-driven active state that updates while scrolling
  * - Scroll-aware background (transparent → white with shadow)
- * - Active page highlighting with Framer Motion layout transition
+ * - Mobile hamburger menu that closes after any item tap
  */
 export function Navbar() {
-  const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const pathname = usePathname();
+  const router = useRouter();
+  const isHome = pathname === '/';
 
   // Scroll-aware navbar background
   useEffect(() => {
@@ -144,10 +176,50 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
+  // IntersectionObserver — track which section is visible
   useEffect(() => {
+    const sectionIds = NAV_ITEMS.map((item) => item.sectionId);
+
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        // Find the entry with the highest intersection ratio that is intersecting
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visible.length > 0) {
+          setActiveSection(visible[0].target.id);
+        }
+      },
+      {
+        // Fire when 30% of the section enters the viewport
+        threshold: [0, 0.3],
+        // Shrink the top rootMargin by navbar height so #home activates properly
+        rootMargin: '-64px 0px -40% 0px',
+      },
+    );
+
+    if (!isHome) return; // Only observe if on home page
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observerRef.current?.observe(el);
+    });
+
+    return () => observerRef.current?.disconnect();
+  }, [isHome]);
+
+  const handleNavClick = useCallback((sectionId: string) => {
     setMobileOpen(false);
-  }, [pathname]);
+    
+    if (!isHome) {
+      router.push(`/${sectionId === 'home' ? '' : '#' + sectionId}`);
+      return;
+    }
+
+    // Small delay so mobile menu closes before scroll jump
+    setTimeout(() => scrollToSection(sectionId), 50);
+  }, [isHome, router]);
 
   const toggleMobile = useCallback(() => {
     setMobileOpen((prev) => !prev);
@@ -165,22 +237,20 @@ export function Navbar() {
     >
       <Container>
         <nav
-          className="flex h-16 items-center justify-between lg:h-18"
+          className="flex h-16 items-center justify-between"
           aria-label="Main navigation"
         >
           {/* Logo */}
-          <Logo />
+          <Logo isHome={isHome} />
 
           {/* Desktop Navigation */}
-          <ul
-            className="hidden lg:flex items-center gap-8"
-            role="list"
-          >
+          <ul className="hidden lg:flex items-center gap-8" role="list">
             {NAV_ITEMS.map((item) => (
-              <li key={item.href}>
-                <NavLink
+              <li key={item.sectionId}>
+                <NavButton
                   item={item}
-                  isActive={pathname === item.href || pathname.startsWith(`${item.href}/`)}
+                  isActive={activeSection === item.sectionId}
+                  onClick={() => handleNavClick(item.sectionId)}
                 />
               </li>
             ))}
@@ -188,8 +258,9 @@ export function Navbar() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3">
-            <Link
-              href="/contact"
+            <button
+              type="button"
+              onClick={() => handleNavClick('contact')}
               className={cn(
                 'inline-flex items-center justify-center',
                 'h-9 px-5 rounded-sm',
@@ -200,8 +271,8 @@ export function Navbar() {
                 'active:scale-[0.98]',
               )}
             >
-              Get a Quote
-            </Link>
+              Get in Touch
+            </button>
           </div>
 
           {/* Mobile Hamburger */}
@@ -246,13 +317,14 @@ export function Navbar() {
                 }}
               >
                 {NAV_ITEMS.map((item) => {
-                  const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+                  const isActive = activeSection === item.sectionId;
                   return (
-                    <motion.li key={item.href} variants={mobileNavItemVariants}>
-                      <Link
-                        href={item.href}
+                    <motion.li key={item.sectionId} variants={mobileNavItemVariants}>
+                      <button
+                        type="button"
+                        onClick={() => handleNavClick(item.sectionId)}
                         className={cn(
-                          'flex items-center py-2.5 px-2 rounded-sm text-sm font-medium tracking-wide',
+                          'flex w-full items-center py-2.5 px-2 rounded-sm text-sm font-medium tracking-wide',
                           'transition-colors duration-150',
                           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B85C38]',
                           isActive
@@ -261,17 +333,19 @@ export function Navbar() {
                         )}
                       >
                         {item.label}
-                      </Link>
+                      </button>
                     </motion.li>
                   );
                 })}
+
                 {/* Mobile CTA */}
                 <motion.li
                   variants={mobileNavItemVariants}
                   className="pt-3 pb-1 border-t border-[#EAEAEA] mt-2"
                 >
-                  <Link
-                    href="/contact"
+                  <button
+                    type="button"
+                    onClick={() => handleNavClick('contact')}
                     className={cn(
                       'flex items-center justify-center w-full',
                       'h-10 rounded-sm',
@@ -281,8 +355,8 @@ export function Navbar() {
                       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B85C38] focus-visible:ring-offset-2',
                     )}
                   >
-                    Get a Quote
-                  </Link>
+                    Get in Touch
+                  </button>
                 </motion.li>
               </motion.ul>
             </Container>

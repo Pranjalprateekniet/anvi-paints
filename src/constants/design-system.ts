@@ -1,5 +1,5 @@
 /**
- * Anvi Paints & Hardware — Design System
+ * Anvi Paints — Design System
  *
  * Single source of truth for all design tokens.
  * Use these constants in Tailwind classes, inline styles, and Framer Motion.

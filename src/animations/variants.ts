@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * Anvi Paints & Hardware — Framer Motion Animation Variants
+ * Anvi Paints — Framer Motion Animation Variants
  *
  * Centralised variant + transition presets consumed across all components.
  * Architecture is prepared for future cursor effects and paint-splash interactions
