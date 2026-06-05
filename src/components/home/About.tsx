@@ -156,8 +156,8 @@ export function About() {
                 <Image
                   src="/images/about/store-front.png"
                   alt="Anvi Paints storefront in Ranchi — Nerolac and Birla Opus authorized dealer since 2013"
-                  width={0}
-                  height={0}
+                  width={1200}
+                  height={900}
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   quality={90}
                   className="w-full h-auto"
@@ -167,7 +167,7 @@ export function About() {
               {/* Corner badge — Since 2013 */}
               <div className="absolute top-4 right-4 z-20 flex items-center gap-2 rounded-xl bg-white/95 px-3 py-2 shadow-md border border-[#EAEAEA] backdrop-blur-sm">
                 <div className="h-6 w-6 rounded-full bg-[#2F5D50]/10 flex items-center justify-center">
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                     <path d="M2 6l2.5 2.5 5.5-5.5" stroke="#2F5D50" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>

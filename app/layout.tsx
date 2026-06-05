@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Playfair_Display, Inter } from 'next/font/google';
 import { Navbar } from '@/src/components/layout/Navbar';
 import { Footer } from '@/src/components/layout/Footer';
-import { rootMetadata, SITE_URL, SITE_NAME } from '@/src/lib/metadata';
+import { rootMetadata, SITE_URL } from '@/src/lib/metadata';
 import './globals.css';
 
 // ─── Font Configuration ────────────────────────────────────────────────────────

@@ -15,7 +15,7 @@ export default function TermsOfUsePage() {
   return (
     <PageWrapper>
       <div className="h-16" aria-hidden="true" />
-      <main className="bg-white py-16 md:py-24">
+      <article className="bg-white py-16 md:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h1
@@ -86,7 +86,7 @@ export default function TermsOfUsePage() {
             </div>
           </div>
         </Container>
-      </main>
+      </article>
     </PageWrapper>
   );
 }

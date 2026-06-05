@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/src/lib/utils';
@@ -96,7 +95,6 @@ function Logo({ isHome }: { isHome: boolean }) {
       type="button"
       onClick={handleClick}
       className="group flex flex-col leading-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B85C38] focus-visible:ring-offset-2 rounded-sm"
-      aria-label="Anvi Paints — scroll to top"
     >
       <span
         className="text-xl font-bold tracking-tight text-[#1A1A1A] transition-colors duration-200 group-hover:text-[#B85C38]"

@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import Link from 'next/link';
 import { cn } from '@/src/lib/utils';
 import { Container } from '@/src/components/ui/Container';
 
@@ -141,8 +140,8 @@ function HeroVisual() {
         <Image
           src="/images/hero/hero-main.png"
           alt="Anvi Paints store — Nerolac and Birla Opus authorized dealer in Ranchi"
-          width={0}
-          height={0}
+          width={1200}
+          height={800}
           sizes="(max-width: 1024px) 100vw, 50vw"
           priority
           quality={90}
@@ -180,7 +179,7 @@ function HeroVisual() {
         className="absolute top-4 left-4 z-20 flex items-center gap-2.5 rounded-xl bg-white/95 px-3.5 py-2.5 shadow-md border border-[#EAEAEA] backdrop-blur-sm"
       >
         <div className="h-8 w-8 rounded-full bg-[#B85C38]/10 flex items-center justify-center flex-shrink-0">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M8 1l1.8 4.6L15 6.5l-3.5 3.4.83 4.84L8 12.35 3.67 14.74l.83-4.84L1 6.5l5.2-.9z" fill="#B85C38" />
           </svg>
         </div>
@@ -198,7 +197,7 @@ function HeroVisual() {
         className="absolute bottom-16 right-4 z-20 flex items-center gap-2.5 rounded-xl bg-white/95 px-3.5 py-2.5 shadow-md border border-[#EAEAEA] backdrop-blur-sm"
       >
         <div className="h-8 w-8 rounded-full bg-[#2F5D50]/10 flex items-center justify-center flex-shrink-0">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M2.5 8.5l3.5 3.5 7.5-7.5" stroke="#2F5D50" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
@@ -287,11 +286,11 @@ export function Hero() {
       </div>
 
       <Container>
-        <div className="relative grid min-h-[calc(100vh-4rem)] grid-cols-1 items-center gap-12 py-20 lg:grid-cols-2 lg:gap-16 lg:py-24">
+        <div className="relative grid min-h-[calc(100vh-4rem)] grid-cols-1 items-center gap-6 py-12 lg:grid-cols-2 lg:gap-16 lg:py-24">
 
           {/* ── LEFT COLUMN ──────────────────────────────────────── */}
           <motion.div
-            className="flex flex-col gap-8"
+            className="flex flex-col gap-5 lg:gap-8"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -337,7 +336,7 @@ export function Hero() {
             {/* Supporting text */}
             <motion.p
               variants={fadeUpVariants}
-              className="max-w-[480px] text-base leading-relaxed text-[#5A5A5A] sm:text-lg"
+              className="max-w-[480px] text-[15px] leading-relaxed text-[#5A5A5A] sm:text-lg"
             >
               Authorised dealer for Nerolac &amp; Birla Opus — every shade,
               every finish, every space covered, backed by 10+ years of
@@ -375,7 +374,6 @@ export function Hero() {
                     'hover:bg-[#A34E2E] hover:shadow-[0_4px_20px_0_rgba(184,92,56,0.35)]',
                     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B85C38] focus-visible:ring-offset-2',
                   )}
-                  aria-label="Explore our products"
                 >
                   Explore Products
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -410,7 +408,7 @@ export function Hero() {
             {/* Divider */}
             <motion.div
               variants={fadeInVariants}
-              className="h-px w-full max-w-xs bg-[#EAEAEA]"
+              className="h-px w-full max-w-xs bg-[#EAEAEA] my-0 lg:my-0"
             />
 
             {/* Trust indicators */}
@@ -427,14 +425,9 @@ export function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* ── RIGHT COLUMN — desktop ────────────────────────── */}
-          <div className="hidden lg:flex items-center justify-center">
-            <HeroVisual />
-          </div>
-
-          {/* ── RIGHT COLUMN — mobile (stacked below) ──────────── */}
-          <div className="flex items-center justify-center lg:hidden">
-            <div className="w-full max-w-sm">
+          {/* ── RIGHT COLUMN ────────────────────────────────────── */}
+          <div className="flex items-center justify-center">
+            <div className="w-full max-w-sm lg:max-w-none">
               <HeroVisual />
             </div>
           </div>

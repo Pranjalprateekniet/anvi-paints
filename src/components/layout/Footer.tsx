@@ -73,7 +73,6 @@ function FooterLogo() {
       <Link
         href="/"
         className="group w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B85C38] focus-visible:ring-offset-2 rounded-sm"
-        aria-label="Anvi Paints — Home"
       >
         <span
           className="block text-2xl font-bold tracking-tight text-white transition-colors duration-200 group-hover:text-[#B85C38]"
@@ -81,11 +80,11 @@ function FooterLogo() {
         >
           Anvi
         </span>
-        <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9CA3AF]">
+        <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-400">
           Paints
         </span>
       </Link>
-      <p className="mt-3 max-w-xs text-sm leading-relaxed text-[#9CA3AF]">
+      <p className="mt-3 max-w-xs text-sm leading-relaxed text-gray-400">
         Authorized Nerolac &amp; Birla Opus dealer in Ranchi, trusted by 20,000+ customers since 2013, providing quality paint solutions for homes, offices and commercial spaces.
       </p>
     </div>
@@ -95,7 +94,7 @@ function FooterLogo() {
 function FooterColumnGroup({ column }: { column: FooterColumn }) {
   return (
     <div className="flex flex-col gap-4">
-      <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-[#D1D5DB]">
+      <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-300">
         {column.heading}
       </h3>
       <ul className="flex flex-col gap-2.5" role="list">
@@ -103,8 +102,10 @@ function FooterColumnGroup({ column }: { column: FooterColumn }) {
           <li key={link.id}>
             <Link
               href={link.href}
+              target={link.href.startsWith('http') ? '_blank' : undefined}
+              rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
               className={cn(
-                'text-sm text-[#9CA3AF]',
+                'text-sm text-gray-400',
                 'transition-colors duration-150',
                 'hover:text-white',
                 'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#B85C38] rounded-sm',
@@ -124,7 +125,7 @@ function FooterBottom() {
 
   return (
     <div className="flex flex-col items-center justify-between gap-4 border-t border-[#374151] pt-8 sm:flex-row">
-      <p className="text-xs text-[#6B7280]">
+      <p className="text-xs text-gray-400">
         &copy; {year} Anvi Paints. All rights reserved.
       </p>
 
@@ -132,12 +133,11 @@ function FooterBottom() {
         {[
           { id: 'bottom-privacy', label: 'Privacy Policy', href: '/privacy-policy' },
           { id: 'bottom-terms', label: 'Terms of Use', href: '/terms-of-use' },
-          { id: 'bottom-sitemap', label: 'Sitemap', href: '/sitemap.xml' },
         ].map((link) => (
           <Link
             key={link.id}
             href={link.href}
-            className="text-xs text-[#6B7280] hover:text-white transition-colors duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#B85C38] rounded-sm"
+            className="text-xs text-gray-400 hover:text-white transition-colors duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#B85C38] rounded-sm"
           >
             {link.label}
           </Link>
@@ -181,7 +181,7 @@ export function Footer() {
                   aria-label={`${social.label} — opens in a new tab`}
                   className={cn(
                     'flex h-8 w-8 items-center justify-center rounded-sm',
-                    'text-[#9CA3AF] bg-[#1F2937]',
+                    'text-gray-400 bg-gray-800',
                     'transition-all duration-200',
                     'hover:text-white hover:bg-[#B85C38]',
                     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B85C38]',

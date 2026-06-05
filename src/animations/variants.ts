@@ -124,14 +124,3 @@ export const defaultViewport = {
   amount: 0.2,
 } as const;
 
-// ─── Future Extension Points ─────────────────────────────────────────────────
-
-/**
- * @reserved PaintBrushCursor
- * Placeholder namespace for the future custom paint-brush cursor animation.
- * Will use SVG path morphing and Framer Motion's `useMotionValue`.
- */
-export const _futureAnimations = {
-  paintBrushCursor: null,
-  paintSplashClick: null,
-} as const;
