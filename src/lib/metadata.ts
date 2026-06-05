@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 
 export const SITE_NAME = 'Anvi Paints';
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://anvipaints.com';
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://anvipaints.shop';
 export const SITE_LOCALE = 'en_IN';
 
 export const DEFAULT_DESCRIPTION =
