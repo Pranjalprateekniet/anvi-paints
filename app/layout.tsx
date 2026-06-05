@@ -1,16 +1,15 @@
 import type { Metadata } from 'next';
 import { Playfair_Display, Inter } from 'next/font/google';
+import { GoogleAnalytics } from '@next/third-parties/google';
+
 import { Navbar } from '@/src/components/layout/Navbar';
 import { Footer } from '@/src/components/layout/Footer';
 import { rootMetadata, SITE_URL } from '@/src/lib/metadata';
+
 import './globals.css';
 
 // ─── Font Configuration ────────────────────────────────────────────────────────
 
-/**
- * Headings — Playfair Display
- * Premium, timeless serif for all h1–h6 elements.
- */
 const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
   display: 'swap',
@@ -18,10 +17,6 @@ const playfairDisplay = Playfair_Display({
   weight: ['400', '500', '600', '700', '800'],
 });
 
-/**
- * Body — Inter
- * Clean, highly legible sans-serif for all body copy.
- */
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
@@ -60,7 +55,14 @@ const localBusinessSchema = {
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      dayOfWeek: [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+      ],
       opens: '09:00',
       closes: '20:00',
     },
@@ -78,14 +80,62 @@ const localBusinessSchema = {
     '@type': 'OfferCatalog',
     name: 'Nerolac & Birla Opus Paint Products',
     itemListElement: [
-      { '@type': 'Offer', itemOffered: { '@type': 'Product', name: 'Nerolac Interior Paints' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Product', name: 'Nerolac Exterior Paints' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Product', name: 'Nerolac Premium Range' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Product', name: 'Nerolac Texture Finishes' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Product', name: 'Nerolac Wood Coatings' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Product', name: 'Nerolac Synthetic Enamel' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Product', name: 'Birla Opus Interior Paints' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Product', name: 'Birla Opus Exterior Paints' } },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Product',
+          name: 'Nerolac Interior Paints',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Product',
+          name: 'Nerolac Exterior Paints',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Product',
+          name: 'Nerolac Premium Range',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Product',
+          name: 'Nerolac Texture Finishes',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Product',
+          name: 'Nerolac Wood Coatings',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Product',
+          name: 'Nerolac Synthetic Enamel',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Product',
+          name: 'Birla Opus Interior Paints',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Product',
+          name: 'Birla Opus Exterior Paints',
+        },
+      },
     ],
   },
 };
@@ -103,16 +153,20 @@ export default function RootLayout({
       className={`${playfairDisplay.variable} ${inter.variable}`}
     >
       <head>
-        {/* LocalBusiness structured data for local SEO */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(localBusinessSchema),
+          }}
         />
       </head>
+
       <body className="min-h-screen flex flex-col bg-white text-[#1A1A1A] antialiased">
         <Navbar />
         <div className="flex-1">{children}</div>
         <Footer />
+
+        <GoogleAnalytics gaId="G-JMRZ941BZE" />
       </body>
     </html>
   );
