@@ -76,68 +76,6 @@ const localBusinessSchema = {
   priceRange: '₹₹',
   currenciesAccepted: 'INR',
   paymentAccepted: 'Cash, UPI, Card',
-  hasOfferCatalog: {
-    '@type': 'OfferCatalog',
-    name: 'Nerolac & Birla Opus Paint Products',
-    itemListElement: [
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Product',
-          name: 'Nerolac Interior Paints',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Product',
-          name: 'Nerolac Exterior Paints',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Product',
-          name: 'Nerolac Premium Range',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Product',
-          name: 'Nerolac Texture Finishes',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Product',
-          name: 'Nerolac Wood Coatings',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Product',
-          name: 'Nerolac Synthetic Enamel',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Product',
-          name: 'Birla Opus Interior Paints',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Product',
-          name: 'Birla Opus Exterior Paints',
-        },
-      },
-    ],
-  },
 };
 
 // ─── Layout ───────────────────────────────────────────────────────────────────
