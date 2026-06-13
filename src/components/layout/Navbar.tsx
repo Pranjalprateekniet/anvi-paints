@@ -14,10 +14,10 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: 'Home',     sectionId: 'home' },
+  { label: 'Home', sectionId: 'home' },
   { label: 'Products', sectionId: 'products' },
-  { label: 'About',    sectionId: 'about' },
-  { label: 'Contact',  sectionId: 'contact' },
+  { label: 'About', sectionId: 'about' },
+  { label: 'Contact', sectionId: 'contact' },
 ];
 
 // ─── Smooth scroll helper ─────────────────────────────────────────────────────
@@ -81,7 +81,7 @@ function HamburgerIcon({ open }: { open: boolean }) {
 
 function Logo({ isHome }: { isHome: boolean }) {
   const router = useRouter();
-  
+
   const handleClick = useCallback(() => {
     if (isHome) {
       scrollToSection('home');
@@ -180,20 +180,15 @@ export function Navbar() {
 
     observerRef.current = new IntersectionObserver(
       (entries) => {
-        // Find the entry with the highest intersection ratio that is intersecting
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-
-        if (visible.length > 0) {
-          setActiveSection(visible[0].target.id);
-        }
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
       },
       {
-        // Fire when 30% of the section enters the viewport
-        threshold: [0, 0.3],
-        // Shrink the top rootMargin by navbar height so #home activates properly
-        rootMargin: '-64px 0px -40% 0px',
+        threshold: 0.25,
+        rootMargin: '-64px 0px -20% 0px',
       },
     );
 
@@ -209,7 +204,7 @@ export function Navbar() {
 
   const handleNavClick = useCallback((sectionId: string) => {
     setMobileOpen(false);
-    
+
     if (!isHome) {
       router.push(`/${sectionId === 'home' ? '' : '#' + sectionId}`);
       return;
